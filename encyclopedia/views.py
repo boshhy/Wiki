@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse  # might be able to delete this
-
 from . import util
+import markdown2
 
 
 def index(request):
@@ -11,11 +11,12 @@ def index(request):
 
 
 def entry(request, name):
-    if util.get_entry(name):
+    entry = util.get_entry(name)
+    if entry:
         return render(request, "encyclopedia/entry.html", {
             "title": name.capitalize(),
             # right now it doesnt format the page properly
-            "entry": util.get_entry(name),
+            "entry": markdown2.markdown(entry)
         })
     else:
         return HttpResponse("not in the system")
