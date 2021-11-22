@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render
 from django.http import HttpResponse  # might be able to delete this
 from . import util
@@ -20,3 +21,9 @@ def entry(request, name):
         })
     else:
         return HttpResponse("not in the system")
+
+
+def search(request):
+    if request.method == "GET":
+        the_search = request.GET.get("q")
+        return HttpResponse("seaching...")
