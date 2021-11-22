@@ -1,8 +1,14 @@
-{% extends "encyclopedia/layout.html" %} {% block title %} {{ entry }} {%
-endblock %} {% block body %}
-<h1>{{ entry }}</h1>
+{% extends "encyclopedia/layout.html" %} 
+
+{% block title %} 
+    {{ title }} 
+{% endblock %} 
+
+{% block body %}
+<h1>{{ title }}</h1>
 
 <p>
     <!-- TODO: fill in with entry.md file -->
+    {{ entry }}
 </p>
 {% endblock %}
