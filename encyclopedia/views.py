@@ -1,9 +1,12 @@
 import re
+from typing import Type
 from django import http
+from django.forms.widgets import Textarea
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 from django.http import HttpResponse  # might be able to delete this
+from django import forms
 from . import util
 import markdown2
 
@@ -51,3 +54,18 @@ def search(request):
         })
     else:
         return HttpResponse("an error occured")
+
+
+class NewTaskForm(forms.Form):
+    title = forms.CharField(widget=forms.TextInput(
+        attrs={"placeholder": "Page Title", 'style': 'font-size: 24px'}))
+    text = forms.CharField(widget=forms.Textarea(
+        attrs={
+            "placeholder": "Page Content",
+            'style': 'height: 300px; width: 90%', }))
+
+
+def new_entry(request):
+    return render(request, "encyclopedia/new.html", {
+        "form": NewTaskForm()
+    })
