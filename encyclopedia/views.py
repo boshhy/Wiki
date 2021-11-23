@@ -1,5 +1,5 @@
 import re
-from typing import Type
+from typing import ContextManager, Type
 from django import http
 from django.forms.widgets import Textarea
 from django.http.response import HttpResponseRedirect
@@ -66,6 +66,18 @@ class NewTaskForm(forms.Form):
 
 
 def new_entry(request):
-    return render(request, "encyclopedia/new.html", {
-        "form": NewTaskForm()
-    })
+    if request.method == "POST":
+        form = NewTaskForm(request.POST)
+
+        if form.is_valid():
+            new_title = form.cleaned_data["title"]
+            new_content = form.cleaned_data["text"]
+            if util.get_entry(new_title):
+                return HttpResponse("Wiki already exists. Need to add an error message")
+            else:
+                util.save_entry(new_title, new_content)
+                return HttpResponseRedirect(reverse("entry", args=[new_title]))
+    else:
+        return render(request, "encyclopedia/new.html", {
+            "form": NewTaskForm()
+        })
