@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <h1>TODO:</h1>
-    <h1>Create a New Page...</h1>
+    <h1><b>Creating a New Page</b></h1>
     <form action="{% url 'new_entry' %}" method="post">
         {% csrf_token %}
         <b>Title</b><br>

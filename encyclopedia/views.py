@@ -1,4 +1,5 @@
 import re
+import random
 from typing import ContextManager, Type
 from django import http
 from django.forms.widgets import Textarea
@@ -106,3 +107,8 @@ def edit(request, name):
             return HttpResponseRedirect(reverse("entry", args=[new_title]))
     else:
         return HttpResponse("An Error has occured")
+
+
+def random_entry(request):
+    entry = random.choice(util.list_entries())
+    return HttpResponseRedirect(reverse("entry", args=[entry]))
