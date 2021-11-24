@@ -10,6 +10,7 @@ from django.http import HttpResponse  # might be able to delete this
 from django import forms
 from . import util
 import markdown2
+from django.contrib import messages
 
 
 def index(request):
@@ -27,6 +28,7 @@ def entry(request, name):
             "entry": markdown2.markdown(entry)
         })
     else:
+        messages.error(request, 'Not in the System')
         return HttpResponse("not in the system")
 
 
