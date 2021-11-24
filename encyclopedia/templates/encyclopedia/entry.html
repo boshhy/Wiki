@@ -5,6 +5,9 @@
 {% endblock %} 
 
 {% block body %}
+    <a href="{% url 'edit' title %}" class="btn btn-primary" style="float: right; margin-right: 50px; margin-top: 20px;">
+            Edit This Page
+    </a>
     <p>
         {{ entry | safe }}
     </p>

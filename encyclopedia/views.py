@@ -81,3 +81,28 @@ def new_entry(request):
         return render(request, "encyclopedia/new.html", {
             "form": NewTaskForm()
         })
+
+
+def edit(request, name):
+    if request.method == "GET":
+        current_text = util.get_entry(name)
+        initial_dict = {
+            "title": name,
+            "text": current_text,
+        }
+        form = NewTaskForm(initial=initial_dict)
+        return render(request, "encyclopedia/edit.html", {
+            "title": name,
+            "form": form
+        })
+
+    elif request.method == "POST":
+        form = NewTaskForm(request.POST)
+
+        if form.is_valid():
+            new_title = form.cleaned_data["title"]
+            new_content = form.cleaned_data["text"]
+            util.save_entry(new_title, new_content)
+            return HttpResponseRedirect(reverse("entry", args=[new_title]))
+    else:
+        return HttpResponse("An Error has occured")
