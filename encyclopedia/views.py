@@ -78,7 +78,7 @@ def new_entry(request):
             if util.get_entry(new_title):
                 return HttpResponse("Wiki already exists. Need to add an error message")
             else:
-                util.save_entry(new_title, new_content)
+                util.save_entry(new_title, bytes(new_content, 'utf8'))
                 return HttpResponseRedirect(reverse("entry", args=[new_title]))
     else:
         return render(request, "encyclopedia/new.html", {
@@ -105,7 +105,7 @@ def edit(request, name):
         if form.is_valid():
             new_title = form.cleaned_data["title"]
             new_content = form.cleaned_data["text"]
-            util.save_entry(new_title, new_content)
+            util.save_entry(new_title, bytes(new_content, "utf8"))
             return HttpResponseRedirect(reverse("entry", args=[new_title]))
     else:
         return HttpResponse("An Error has occured")
