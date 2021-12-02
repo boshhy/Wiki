@@ -2,6 +2,7 @@ import re
 import random
 from typing import ContextManager, Type
 from django import http
+from django.forms.fields import TypedMultipleChoiceField
 from django.forms.widgets import Textarea
 from django.http.response import HttpResponseRedirect
 from django.urls import reverse
@@ -58,7 +59,7 @@ def search(request):
             "entries": the_list
         })
     else:
-        return HttpResponse("an error occured")
+        return HttpResponse("An error occured")
 
 
 class NewTaskForm(forms.Form):
@@ -109,12 +110,11 @@ def edit(request, name):
         form = NewTaskForm(request.POST)
 
         if form.is_valid():
-            new_title = form.cleaned_data["title"]
             new_content = form.cleaned_data["text"]
-            util.save_entry(new_title, bytes(new_content, "utf8"))
-            return HttpResponseRedirect(reverse("entry", args=[new_title]))
+            util.save_entry(name, bytes(new_content, "utf8"))
+            return HttpResponseRedirect(reverse("entry", args=[name]))
     else:
-        return HttpResponse("An Error has occured")
+        return HttpResponse("An error occured")
 
 
 def random_entry(request):

@@ -8,10 +8,8 @@
     <h1><b>Editing page: {{ title }} </b></h1><br>
     <form action="{% url 'edit' title %}" method="post">
         {% csrf_token %}
-        <b>Title</b><br>
-        {{ form.title }}
-        <br><br>
-        <b>Content</b><br>
+        {{ form.title.as_hidden }}
+        <h5><b>Content</b>:</h5>
         {{ form.text }}
         <br>
         <input type="submit">
