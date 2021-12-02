@@ -6,11 +6,13 @@
 
 {% block body %}
     {% if in_wiki %}
+    <!-- If Wiki entry already exists, throw a warning at the user  -->
         <div class="alert alert-danger" role="alert" style="width: 90%;">
             Wiki entry already exists.
         </div>
     {% endif %}
     <h1><b>Creating a New Page</b></h1>
+    <!-- Displays a form for the user, with title and contents being the two things a user can input -->
     <form action="{% url 'new_entry' %}" method="post">
         {% csrf_token %}
         <b>Title</b><br>

@@ -5,9 +5,11 @@
 {% endblock %}
 
 {% block body %}
+    <!-- edit page layout. Users may edit contents of an existing wiki entry -->
     <h1><b>Editing page: {{ title }} </b></h1><br>
     <form action="{% url 'edit' title %}" method="post">
         {% csrf_token %}
+        <!-- This hides the title of the form, so user can not change title name. only contents. -->
         {{ form.title.as_hidden }}
         <h5><b>Content</b>:</h5>
         {{ form.text }}

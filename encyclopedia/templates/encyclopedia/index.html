@@ -8,9 +8,11 @@
     <h1>All Pages</h1>
 
     <ul>
+        <!-- If no matchin substring is found, display a 'nothing found' message to user -->
         {% if nothing_found %}
             <kbd style="background-color: red;">Sorry nothing found.</kbd>
         {% endif %}
+        <!-- Display all matching entries that match the substring -->
         {% for entry in entries %}
             <li><a href="{% url 'entry' entry %}"> {{ entry }} </a></li>
         {% endfor %}

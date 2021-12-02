@@ -5,9 +5,11 @@
 {% endblock %} 
 
 {% block body %}
+<!-- Every entry need an edit button, position top right -->
     <a href="{% url 'edit' title %}" class="btn btn-primary" style="float: right; margin-right: 50px; margin-top: 20px;">
             Edit This Page
     </a>
+    <!-- displays contents of Wiki entry -->
     <p>
         {{ entry | safe }}
     </p>

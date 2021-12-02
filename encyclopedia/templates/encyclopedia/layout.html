@@ -17,12 +17,15 @@
                     <input class="search" type="text" name="q" placeholder="Search Encyclopedia">
                 </form>
                 <div>
+                    <!-- Links to the index.html page -->
                     <a href="{% url 'index' %}"> Home </a>
                 </div>
                 <div>
+                    <!-- Links to the new.html page -->
                     <a href="{% url 'new_entry' %}"> Create New Page </a>
                 </div>
                 <div>
+                    <!-- Links to entry.html with a random title in the Wiki entries -->
                     <a href="{% url 'random' %}"> Random Page </a>
                 </div>
                 {% block nav %}
