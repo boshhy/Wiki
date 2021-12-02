@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block body %}
+    {% if in_wiki %}
+        <div class="alert alert-danger" role="alert" style="width: 90%;">
+            Wiki entry already exists.
+        </div>
+    {% endif %}
     <h1><b>Creating a New Page</b></h1>
     <form action="{% url 'new_entry' %}" method="post">
         {% csrf_token %}

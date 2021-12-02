@@ -1,0 +1,11 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Error 404.
+{% endblock %}
+
+{% block body %}
+    <h1>Error 404.</h1>
+    <h2><kbd>Page Not found.</kbd></h2>
+    If you would like to create a page for <kbd style="background-color: gainsboro; color: black;">{{ title }}</kbd>, click <a href="{% url 'new_entry' %}">here</a>.
+{% endblock %}

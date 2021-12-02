@@ -8,8 +8,11 @@
     <h1>All Pages</h1>
 
     <ul>
+        {% if nothing_found %}
+            <kbd style="background-color: red;">Sorry nothing found.</kbd>
+        {% endif %}
         {% for entry in entries %}
-        <li><a href="{% url 'entry' entry %}"> {{ entry }} </a></li>
+            <li><a href="{% url 'entry' entry %}"> {{ entry }} </a></li>
         {% endfor %}
     </ul>
 {% endblock %}

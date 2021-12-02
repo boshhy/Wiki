@@ -24,12 +24,12 @@ def entry(request, name):
     if entry:
         return render(request, "encyclopedia/entry.html", {
             "title": name.capitalize(),
-            # right now it doesnt format the page properly
             "entry": markdown2.markdown(entry)
         })
     else:
-        messages.error(request, 'Not in the System')
-        return HttpResponse("not in the system")
+        return render(request, "encyclopedia/notFound.html", {
+            "title": name
+        })
 
 
 def search(request):
@@ -49,7 +49,9 @@ def search(request):
 
         # if nothing was found return proper response
         if not the_list:
-            return HttpResponse("nothing found")
+            return render(request, "encyclopedia/index.html", {
+                "nothing_found": True
+            })
 
         # display the list of items with matching substring
         return render(request, "encyclopedia/index.html", {
@@ -76,12 +78,16 @@ def new_entry(request):
             new_title = form.cleaned_data["title"]
             new_content = form.cleaned_data["text"]
             if util.get_entry(new_title):
-                return HttpResponse("Wiki already exists. Need to add an error message")
+                return render(request, "encyclopedia/new.html", {
+                    "in_wiki": True,
+                    "form": form
+                })
             else:
                 util.save_entry(new_title, bytes(new_content, 'utf8'))
                 return HttpResponseRedirect(reverse("entry", args=[new_title]))
     else:
         return render(request, "encyclopedia/new.html", {
+            "in_wiki": False,
             "form": NewTaskForm()
         })
 
