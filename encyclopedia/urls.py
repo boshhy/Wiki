@@ -4,6 +4,8 @@ from django.urls import path
 
 from . import views
 
+# Holds all the paths for url inputs, along with the function that should be called
+# and a 'nickname' for each path
 urlpatterns = [
     path("", views.index, name="index"),
     path("wiki/<str:name>/", views.entry, name="entry"),
