@@ -15,17 +15,17 @@ from django.contrib import messages
 
 
 # Gets a list of all entries on our Wiki page and assigns the to "entries"
-# index.html generates a page with the list "entries"
+# Index.html generates a page with the list "entries"
 def index(request):
     return render(request, "encyclopedia/index.html", {
         "entries": util.list_entries()
     })
 
 
-# Given a name of an enty, look for it in the util.get_entry()
+# Given a name of an entry, look for it in the util.get_entry()
 def entry(request, name):
     entry = util.get_entry(name)
-    # If found pass the name and its contents(with markdown applied) to entry.html
+    # If found, pass the name and its contents(with markdown applied) to entry.html
     if entry:
         return render(request, "encyclopedia/entry.html", {
             "title": name.capitalize(),
@@ -41,7 +41,7 @@ def entry(request, name):
 # This searches and returns all substring matches for the user search
 def search(request):
     if request.method == "GET":
-        # gets the search and entries and assigns them to variables
+        # Gets the search and entries and assigns them to variables
         the_search = request.GET.get("q")
         the_entries = util.list_entries()
         the_list = []
@@ -50,19 +50,19 @@ def search(request):
         if util.get_entry(the_search):
             return HttpResponseRedirect(reverse("entry", args=[the_search]))
 
-        # look through entries for matching substring
+        # Look through entries for matching substring
         for entry in the_entries:
             if the_search.upper() in entry.upper():
-                # if substring matches entry add entry to the_list
+                # If substring matches entry add entry to the_list
                 the_list.append(entry)
 
-        # if nothing was found return proper response
+        # If nothing was found return proper response
         if not the_list:
             return render(request, "encyclopedia/index.html", {
                 "nothing_found": True
             })
 
-        # display the list of items with matching substring
+        # Display the list of items with matching substring
         return render(request, "encyclopedia/index.html", {
             "nothing_found": False,
             "entries": the_list
@@ -104,7 +104,7 @@ def new_entry(request):
             else:
                 util.save_entry(new_title, bytes(new_content, 'utf8'))
                 return HttpResponseRedirect(reverse("entry", args=[new_title]))
-    # This will be returned if a user is requesting a to create a new page. (blank form)
+    # This will be returned if a user is requesting to create a new page. (blank form)
     else:
         return render(request, "encyclopedia/new.html", {
             "in_wiki": False,
@@ -114,14 +114,14 @@ def new_entry(request):
 
 # This will let a user edit an existing Wiki page
 def edit(request, name):
-    # it methos is 'GET' then display a form with the exising content for current page
+    # If method is 'GET' then display a form with the exising content for current page
     if request.method == "GET":
         current_text = util.get_entry(name)
         initial_dict = {
             "title": name,
             "text": current_text,
         }
-        # the below line initialized the form with content for the Wiki entry
+        # The below line initialized the form with content for the Wiki entry
         form = NewTaskForm(initial=initial_dict)
         # Display edit.html with contents prefilled with Wiki contents
         return render(request, "encyclopedia/edit.html", {
@@ -134,10 +134,10 @@ def edit(request, name):
         form = NewTaskForm(request.POST)
 
         if form.is_valid():
-            # strip the new "text" content and overide old contents with new
+            # Strip the new "text" content and overide old contents with new
             new_content = form.cleaned_data["text"]
             util.save_entry(name, bytes(new_content, "utf8"))
-            # redirect the user to the new updated entry.html page
+            # Redirect the user to the new updated entry.html page
             return HttpResponseRedirect(reverse("entry", args=[name]))
     else:
         return HttpResponse("An error occured")
